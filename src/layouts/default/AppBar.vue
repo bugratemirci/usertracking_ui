@@ -3,7 +3,9 @@
     <v-navigation-drawer :width="325">
       <v-list>
         <v-list-item
-          prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+          :prepend-avatar="
+            projectRootPath + userTestFolderName + userTestProfilePhotoName
+          "
           title="Buğrahan Temirci"
           subtitle="bugrahan.temirci@hotmail.com"
         ></v-list-item>
@@ -63,8 +65,28 @@
   </v-layout>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import DefaultView from "./View.vue";
+import { useAppStore } from "@/store/app";
+
+const appStore = useAppStore();
+export default {
+  data() {
+    return {
+      projectRootPath: "",
+      userTestFolderName: "",
+      userTestProfilePhotoName: "",
+    };
+  },
+  components: {
+    DefaultView,
+  },
+  created() {
+    this.projectRootPath = "http://192.168.1.33/";
+    this.userTestFolderName = "users/biygraa1693945348476074/";
+    this.userTestProfilePhotoName = "1682697983467.jpg";
+  },
+};
 </script>
 
 <style>
