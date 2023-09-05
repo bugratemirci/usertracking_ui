@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <template v-for="(item, index) in todos" :key="item">
-      <v-checkbox v-model="item.selected" :label="item.title"></v-checkbox>
+      <v-checkbox v-model="item.completed" :label="item.title"></v-checkbox>
     </template>
   </v-container>
   <div class="text-center">
@@ -20,8 +20,8 @@ export default {
     todos: [],
     page_size: 10,
     count: 10,
-    page: 1,
     total_page: 0,
+    page: 1,
   }),
   methods: {
     getAll() {
@@ -32,7 +32,6 @@ export default {
           this.page_size = json.page_size;
           this.count = json.count;
           this.total_page = json.total_pages;
-          console.log(this.total_page);
         });
     },
   },

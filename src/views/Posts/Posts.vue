@@ -1,6 +1,10 @@
 <template>
   <div v-for="(item, index) in posts" :key="index" style="margin-bottom: 1%">
-    <v-card width="100%" :title="item.title" :text="item.body"></v-card>
+    <v-card width="100%" :title="item.title" :text="item.body">
+      <v-card-actions :style="{ justifyContent: 'right' }">
+        <v-btn color="orange"> See More </v-btn>
+      </v-card-actions>
+    </v-card>
   </div>
   <div class="text-center">
     <v-pagination
