@@ -3,9 +3,7 @@
     <v-navigation-drawer :width="325">
       <v-list>
         <v-list-item
-          :prepend-avatar="
-            projectRootPath + userTestFolderName + userTestProfilePhotoName
-          "
+          :prepend-avatar="projectRootPath + profilePhotoPath"
           title="Buğrahan Temirci"
           subtitle="bugrahan.temirci@hotmail.com"
         ></v-list-item>
@@ -29,6 +27,17 @@
         </v-list-item>
         <v-list-item
           prepend-icon="mdi-image-album"
+          title="Photos"
+          value="photos"
+          :to="{ name: 'Photos' }"
+        >
+          <template v-slot:prepend> <v-icon color="#4F359B"></v-icon> </template>
+          <template v-slot:title>
+            <span style="color: gray">Photos</span>
+          </template></v-list-item
+        >
+        <v-list-item
+          prepend-icon="mdi-image-album"
           title="Albums"
           value="albums"
           :to="{ name: 'Albums' }"
@@ -49,6 +58,17 @@
             <span style="color: gray">Posts</span>
           </template>
         </v-list-item>
+        <v-list-item
+          prepend-icon="mdi-account"
+          title="Users"
+          value="users"
+          :to="{ name: 'Users' }"
+        >
+          <template v-slot:prepend> <v-icon color="#4F359B"></v-icon> </template>
+          <template v-slot:title>
+            <span style="color: gray">Users</span>
+          </template>
+        </v-list-item>
       </v-list>
       <div class="fixedBottom">
         <v-divider></v-divider>
@@ -67,24 +87,28 @@
 
 <script lang="ts">
 import DefaultView from "./View.vue";
-import { useAppStore } from "@/store/app";
+import { useUserStore } from "@/store/app";
 
-const appStore = useAppStore();
 export default {
   data() {
     return {
       projectRootPath: "",
       userTestFolderName: "",
-      userTestProfilePhotoName: "",
+      profilePhotoPath: "",
     };
   },
   components: {
     DefaultView,
   },
   created() {
-    this.projectRootPath = "http://192.168.1.33/";
-    this.userTestFolderName = "users/biygraa1693945348476074/";
-    this.userTestProfilePhotoName = "1682697983467.jpg";
+    const store = useUserStore();
+
+    this.userTestFolderName = "biygraa1693945348476074/";
+    this.profilePhotoPath = store.$state.user.profile_photo_path || "";
+
+    this.projectRootPath =
+      import.meta.env.VITE_PROJECT_ROOT_PATH_PREFIX +
+      import.meta.env.VITE_USERS_PATH_PREFIX;
   },
 };
 </script>
