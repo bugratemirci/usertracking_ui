@@ -36,6 +36,8 @@
 <script lang="ts">
 import Post from "@/models/Post.model.ts";
 import { addPost } from "@/services/Post.service";
+import { useUserStore } from "@/store/app";
+const userStore = useUserStore();
 export default {
   data() {
     return {
@@ -45,7 +47,8 @@ export default {
   },
   methods: {
     save() {
-      addPost(14, this.post).then((res) => {
+      const userId = userStore.$state.user.id;
+      addPost(userId, this.post).then((res) => {
         console.log(res.data);
       });
     },

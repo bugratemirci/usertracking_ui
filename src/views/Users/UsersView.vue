@@ -44,13 +44,17 @@
 </template>
 <script lang="ts">
 import { getAnotherUsers } from "@/services/User.service";
+import { useUserStore } from "@/store/app";
+const userStore = useUserStore();
 export default {
   data: () => ({
     shows: [],
     users: [],
+    userId: Number,
   }),
   created() {
-    getAnotherUsers(14).then((res) => {
+    this.userId = userStore.$state.user.id;
+    getAnotherUsers(this.userId).then((res) => {
       this.users = res.data;
       this.users.forEach((element) => {
         this.shows.push(false);

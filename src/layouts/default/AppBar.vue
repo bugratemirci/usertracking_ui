@@ -37,7 +37,7 @@
           </template></v-list-item
         >
         <v-list-item
-          prepend-icon="mdi-image-album"
+          prepend-icon="mdi-image-multiple"
           title="Albums"
           value="albums"
           :to="{ name: 'Albums' }"
@@ -69,15 +69,27 @@
             <span style="color: gray">Users</span>
           </template>
         </v-list-item>
+        <v-list-item
+          prepend-icon="mdi-post"
+          title="Discover"
+          value="discover"
+          :to="{ path: 'discover' }"
+        >
+          <template v-slot:prepend> <v-icon color="#4F359B"></v-icon> </template>
+          <template v-slot:title>
+            <span style="color: gray">Discover</span>
+          </template>
+        </v-list-item>
       </v-list>
+
       <div class="fixedBottom">
-        <v-divider></v-divider>
-        <v-list>
-          <v-list-item>
-            <v-img :width="50" src="src\assets\images\n2logo.png"></v-img>
-            <span style="font-weight: 800; color: #5c6672">N2Mobil</span>
-          </v-list-item>
-        </v-list>
+        <div>
+          <v-divider></v-divider>
+        </div>
+        <div class="row">
+          <img style="width: 50px; margin-right: 2%" src="src\assets\images\n2logo.png" />
+          <span style="font-weight: 800; color: #5c6672">N2Mobil</span>
+        </div>
       </div>
     </v-navigation-drawer>
 
@@ -115,8 +127,15 @@ export default {
 
 <style>
 .fixedBottom {
-  position: fixed !important;
-  bottom: 0 !important;
+  position: fixed;
+  bottom: 0;
   width: 100%;
+}
+.row {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding: 5%;
 }
 </style>

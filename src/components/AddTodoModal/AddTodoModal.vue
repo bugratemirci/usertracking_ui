@@ -31,6 +31,8 @@
 <script lang="ts">
 import Todo from "@/models/Todo.model.ts";
 import { addTodo } from "@/services/Todo.service";
+import { useUserStore } from "@/store/app";
+const userStore = useUserStore();
 export default {
   data() {
     return {
@@ -40,7 +42,8 @@ export default {
   },
   methods: {
     save() {
-      addTodo(14, this.todo).then((res) => {
+      const userId = userStore.$state.user.id;
+      addTodo(userId, this.todo).then((res) => {
         console.log(res.data);
       });
     },

@@ -19,23 +19,20 @@
       </v-img>
     </v-col>
   </v-row>
-  <AddPhotoModal />
 </template>
 <script lang="ts">
-import { getPhotosByUser } from "@/services/Photo.service.ts";
-import AddPhotoModal from "@/components/AddPhotoModal/AddPhotoModal.vue";
-import { useUserStore } from "@/store/app";
-const userStore = useUserStore();
+import { getPhotosByAlbum } from "@/services/Photo.service.ts";
 export default {
   data: () => ({ photos: [] }),
   created() {
-    const userId = userStore.$state.user.id;
-    getPhotosByUser(userId).then((res) => {
+    console.log(this.$route.params);
+
+    getPhotosByAlbum(this.$route.params.albumId).then((res) => {
       this.photos = res.data;
     });
-    this.projectRootPath = import.meta.env.VITE_PROJECT_ROOT_PATH_PREFIX + "users/";
+    this.projectRootPath = import.meta.env.VITE_PROJECT_ROOT_PATH_PREFIX + '/users';
   },
-  components: { AddPhotoModal },
+  components: {},
   methods: {},
 };
 </script>

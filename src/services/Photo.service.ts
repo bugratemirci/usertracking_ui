@@ -1,6 +1,5 @@
 import Photo from "@/models/Photo.model";
 import axios from "axios";
-import * as fs from "fs";
 
 export const getPhotosByUser = (userId: number) => {
   return axios.get(import.meta.env.VITE_API_URL + "photos/getphotosbyuser/", {
@@ -18,9 +17,15 @@ export const addPhotoByUser = (userId: number, photo: Photo) => {
   let config = {
     method: "post",
     maxBodyLength: Infinity,
-    url: "http://localhost:8000/photos/?user_id=" + userId,
+    url: import.meta.env.VITE_API_URL + "photos/?user_id=" + userId,
     headers: { "Content-Type": "multipart/form-data" },
     data: data,
   };
   return axios.request(config);
+};
+
+export const getPhotosByAlbum = (albumId: number) => {
+  return axios.get(import.meta.env.VITE_API_URL + "photos/getphotosbyalbum/", {
+    params: { album_id: albumId },
+  });
 };

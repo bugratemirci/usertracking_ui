@@ -41,6 +41,16 @@ const routes = [
         name: "Photos",
         component: () => import("@/views/Photos/PhotosView.vue"),
       },
+      {
+        path: "/albumdetail/:albumId",
+        name: "AlbumDetail",
+        component: () => import("@/views/Album/AlbumDetail/AlbumDetail.vue"),
+      },
+      {
+        path: "/discover",
+        name: "Discover",
+        component: () => import("@/views/Discover/DiscoverView.vue"),
+      },
     ],
   },
 ];

@@ -1,9 +1,21 @@
 <template>
   <div v-for="(item, index) in posts" :key="index" style="margin-bottom: 1%">
-    <v-card width="100%" :title="item.title" :text="item.body">
+    <v-card width="100%">
       <v-card-actions :style="{ justifyContent: 'right' }">
-        <v-btn color="orange"> See More </v-btn>
+        <v-btn color="orange"> Comments </v-btn>
       </v-card-actions>
+      <template v-slot:title>
+        <v-avatar class="mr-3 mb-3" size="50" rounded="5">
+          <v-img src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"></v-img>
+        </v-avatar>
+        <span>@{{ item.user.username }}</span>
+      </template>
+
+      <template v-slot:subtitle>
+        {{ item.title }}
+      </template>
+
+      <template v-slot:text> {{ item.body }} </template>
     </v-card>
   </div>
   <div class="text-center">
@@ -16,10 +28,8 @@
   <AddPostModal />
 </template>
 <script lang="ts">
-import { getPostsByUser } from "@/services/Post.service";
+import { getAllPosts } from "@/services/Post.service";
 import AddPostModal from "@/components/AddPostModal/AddPostModal.vue";
-import { useUserStore } from "@/store/app";
-const store = useUserStore();
 export default {
   data: () => ({
     selected: [],
@@ -29,12 +39,10 @@ export default {
     page: 1,
     total_page: 0,
     currentRoot: "Posts",
-    userId: Number,
   }),
   methods: {
     getAll() {
-      this.userId = store.$state.user.id;
-      getPostsByUser(this.userId, this.page, this.page_size).then((res) => {
+      getAllPosts(this.page).then((res) => {
         this.posts = res.data.results;
         this.total_page = res.data.total_pages;
       });
