@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <template v-for="(item, index) in todos" :key="item">
+    <template v-for="item in todos" :key="item">
       <v-checkbox v-model="item.completed" :label="item.title"></v-checkbox>
     </template>
   </v-container>

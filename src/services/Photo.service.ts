@@ -14,7 +14,7 @@ export const addPhotoByUser = (userId: number, photo: Photo) => {
   data.append("title", "deneme");
   data.append("file", photo.file);
 
-  let config = {
+  const config = {
     method: "post",
     maxBodyLength: Infinity,
     url: import.meta.env.VITE_API_URL + "photos/?user_id=" + userId,
