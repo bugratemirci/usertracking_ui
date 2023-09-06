@@ -13,7 +13,9 @@
   </div>
   <AddTodoModal />
 </template>
-<script>
+<script lang="ts">
+import { getTodosByUser } from "@/services/Todo.service";
+import AddTodoModal from "@/components/AddTodoModal/AddTodoModal.vue";
 export default {
   data: () => ({
     selected: [],
@@ -25,19 +27,22 @@ export default {
   }),
   methods: {
     getAll() {
-      fetch("http://localhost:8000/todos/?page=" + this.page)
-        .then((response) => response.json())
-        .then((json) => {
-          this.todos = json.results;
-          this.page_size = json.page_size;
-          this.count = json.count;
-          this.total_page = json.total_pages;
-        });
+      getTodosByUser(14, this.page, this.page_size).then((res) => {
+        this.todos = res.data.results;
+        this.total_page = res.data.total_pages;
+      });
     },
   },
   created() {
     this.getAll();
   },
-  components: {},
+  components: { AddTodoModal },
 };
 </script>
+<style>
+.pagination {
+  position: fixed;
+  right: 50%;
+  bottom: 0%;
+}
+</style>

@@ -8,7 +8,7 @@
         class="mr-4 mb-4"
       >
         <v-row style="width: 350px; margin: 0px" v-on:click="console.log(index)">
-          <v-col v-for="(n, index) in item.photos" :key="n" md="6">
+          <v-col v-for="(n, index) in item.photos" :key="index" md="6">
             <v-img
               :src="`${projectRootPath + '/users/' + n.url}`"
               :lazy-src="`${n.thumbnail_url}`"
@@ -32,9 +32,7 @@
   </v-container>
 </template>
 <script lang="ts">
-import { useAppStore } from "@/store/app";
-
-const appStore = useAppStore();
+import { getAlbumByUser } from "@/services/Album.service";
 export default {
   data: () => ({
     projectRootPath: "",
@@ -42,14 +40,10 @@ export default {
     albums: [],
   }),
   created() {
-    this.projectRootPath = "http://192.168.1.33/";
-    fetch("http://localhost:8000/albums/getalbumsbyuser/?user_id=14")
-      .then((res) => res.json())
-      .then((res) => {
-        this.albums = res;
-      });
-
-    console.log(this.projectRootPath);
+    getAlbumByUser(14).then((res) => {
+      this.albums = res.data;
+    });
+    this.projectRootPath = import.meta.env.VITE_PROJECT_ROOT_PATH_PREFIX;
   },
 };
 </script>

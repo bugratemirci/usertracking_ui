@@ -13,8 +13,11 @@
       @update:model-value="getAll"
     ></v-pagination>
   </div>
+  <AddPostModal />
 </template>
 <script lang="ts">
+import { getPostsByUser } from "@/services/Post.service";
+import AddPostModal from "@/components/AddPostModal/AddPostModal.vue";
 export default {
   data: () => ({
     selected: [],
@@ -26,20 +29,15 @@ export default {
   }),
   methods: {
     getAll() {
-      fetch("http://localhost:8000/posts/?page=" + this.page)
-        .then((response) => response.json())
-        .then((json) => {
-          this.posts = json.results;
-          this.page_size = json.page_size;
-          this.count = json.count;
-          this.total_page = json.total_pages;
-          console.log(this.total_page);
-        });
+      getPostsByUser(14, this.page, this.page_size).then((res) => {
+        this.posts = res.data.results;
+        this.total_page = res.data.total_pages;
+      });
     },
   },
   created() {
     this.getAll();
   },
-  components: {},
+  components: { AddPostModal },
 };
 </script>
