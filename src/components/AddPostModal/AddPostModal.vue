@@ -15,7 +15,12 @@
       <v-card>
         <v-sheet width="300" class="mx-auto">
           <v-form>
-            <v-text-field v-model="todo.title" label="Todo"></v-text-field>
+            <v-text-field v-model="post.title" label="Post Title"></v-text-field>
+          </v-form>
+        </v-sheet>
+        <v-sheet width="300" class="mx-auto">
+          <v-form>
+            <v-text-field v-model="post.body" label="Post Body"></v-text-field>
           </v-form>
         </v-sheet>
         <v-card-actions>
@@ -29,23 +34,23 @@
   </div>
 </template>
 <script lang="ts">
-import Todo from "@/models/Todo.model.ts";
-import { addTodo } from "@/services/Todo.service";
+import Post from "@/models/Post.model.ts";
+import { addPost } from "@/services/Post.service";
 export default {
   data() {
     return {
       dialog: false,
-      todo: new Todo(),
+      post: new Post(),
     };
   },
   methods: {
     save() {
-      addTodo(14, this.todo).then((res) => {
+      addPost(14, this.post).then((res) => {
         console.log(res.data);
       });
     },
     onClose() {
-      this.todo = new Todo();
+      this.post = new Post();
       this.dialog = false;
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <v-dialog v-model="dialog" width="auto">
+    <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ props }">
         <v-btn
           icon="mdi-plus"
@@ -12,10 +12,15 @@
         </v-btn>
       </template>
 
-      <v-card>
-        <v-sheet width="300" class="mx-auto">
+      <v-card class="pa-4">
+        <v-file-input
+          label="File input"
+          variant="outlined"
+          @change="onFileChanged"
+        ></v-file-input>
+        <v-sheet width="100%" class="mx-auto">
           <v-form>
-            <v-text-field v-model="todo.title" label="Todo"></v-text-field>
+            <v-text-field v-model="photo.title" label="Title"></v-text-field>
           </v-form>
         </v-sheet>
         <v-card-actions>
@@ -29,24 +34,35 @@
   </div>
 </template>
 <script lang="ts">
-import Todo from "@/models/Todo.model.ts";
-import { addTodo } from "@/services/Todo.service";
+import Photo from "@/models/Photo.model.ts";
+import { addPhotoByUser } from "@/services/Photo.service";
 export default {
   data() {
     return {
       dialog: false,
-      todo: new Todo(),
+      photo: new Photo(),
+      selectedFile: null,
+      a: String,
     };
   },
   methods: {
     save() {
-      addTodo(14, this.todo).then((res) => {
-        console.log(res.data);
-      });
+      console.log(this.photo);
+
+      addPhotoByUser(14, this.photo)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     onClose() {
-      this.todo = new Todo();
+      this.photo = new Photo();
       this.dialog = false;
+    },
+    onFileChanged(e) {
+      this.photo.file = e.target.files[0];
     },
   },
 };
