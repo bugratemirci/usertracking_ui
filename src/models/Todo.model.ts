@@ -1,5 +1,5 @@
 export default class Todo {
   public id?: number;
-  public name?: string;
+  public title?: string;
   public selected?: string;
 }
