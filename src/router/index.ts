@@ -1,57 +1,70 @@
 // Composables
 import { createRouter, createWebHistory } from "vue-router";
-
+function guardMyroute(to, from, next) {
+  var isAuthenticated = false;
+  //this is just an example. You will have to find a better or
+  // centralised way to handle you localstorage data handling
+  if (localStorage.getItem("LoggedUser")) isAuthenticated = true;
+  else isAuthenticated = false;
+  if (isAuthenticated) {
+    next(); // allow to enter route
+  } else {
+    next("/login"); // go to '/login';
+  }
+}
 const routes = [
   {
     path: "/",
     component: () => import("@/layouts/default/Default.vue"),
     children: [
       {
-        path: "",
-        name: "Home",
-        component: () => import("@/views/Home/Home.vue"),
-      },
-      {
-        path: "/login",
-        name: "Login",
-        component: () => import("@/views/Login/Login.vue"),
-      },
-      {
         path: "/todos",
         name: "Todos",
+        beforeEnter: guardMyroute,
         component: () => import("@/views/Todo/Todo.vue"),
       },
       {
         path: "/albums",
         name: "Albums",
+        beforeEnter: guardMyroute,
         component: () => import("@/views/Album/Album.vue"),
       },
       {
         path: "/posts",
         name: "Posts",
+        beforeEnter: guardMyroute,
         component: () => import("@/views/Posts/Posts.vue"),
       },
       {
         path: "/users",
         name: "Users",
+        beforeEnter: guardMyroute,
         component: () => import("@/views/Users/UsersView.vue"),
       },
       {
         path: "/photos",
         name: "Photos",
+        beforeEnter: guardMyroute,
         component: () => import("@/views/Photos/PhotosView.vue"),
       },
       {
         path: "/albumdetail/:albumId",
         name: "AlbumDetail",
+        beforeEnter: guardMyroute,
         component: () => import("@/views/Album/AlbumDetail/AlbumDetail.vue"),
       },
       {
         path: "/discover",
         name: "Discover",
+        beforeEnter: guardMyroute,
         component: () => import("@/views/Discover/DiscoverView.vue"),
       },
     ],
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("@/views/Login/Login.vue"),
   },
 ];
 
