@@ -4,8 +4,8 @@
       <v-list>
         <v-list-item
           :prepend-avatar="projectRootPath + profilePhotoPath"
-          title="Buğrahan Temirci"
-          subtitle="bugrahan.temirci@hotmail.com"
+          :title="username"
+          :subtitle="email"
         ></v-list-item>
       </v-list>
 
@@ -107,17 +107,20 @@ export default {
       projectRootPath: "",
       userTestFolderName: "",
       profilePhotoPath: "",
+      username: "",
+      email: "",
     };
   },
   components: {
     DefaultView,
   },
-  created() {
+  mounted() {
     const store = useUserStore();
 
     this.userTestFolderName = "biygraa1693945348476074/";
     this.profilePhotoPath = store.$state.user.profile_photo_path || "";
-
+    this.username = store.$state.user.username || "";
+    this.email = store.$state.user.email || "";
     this.projectRootPath =
       import.meta.env.VITE_PROJECT_ROOT_PATH_PREFIX +
       import.meta.env.VITE_USERS_PATH_PREFIX;

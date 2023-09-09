@@ -6,6 +6,9 @@ export const getPhotosByUser = (userId: number) => {
     params: {
       user_id: userId,
     },
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("access_token"),
+    },
   });
 };
 
@@ -18,7 +21,10 @@ export const addPhotoByUser = (userId: number, photo: Photo) => {
     method: "post",
     maxBodyLength: Infinity,
     url: import.meta.env.VITE_API_URL + "photos/?user_id=" + userId,
-    headers: { "Content-Type": "multipart/form-data" },
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + localStorage.getItem("access_token"),
+    },
     data: data,
   };
   return axios.request(config);
@@ -27,5 +33,8 @@ export const addPhotoByUser = (userId: number, photo: Photo) => {
 export const getPhotosByAlbum = (albumId: number) => {
   return axios.get(import.meta.env.VITE_API_URL + "photos/getphotosbyalbum/", {
     params: { album_id: albumId },
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("access_token"),
+    },
   });
 };

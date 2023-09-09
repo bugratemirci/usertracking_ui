@@ -1,9 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 function guardMyroute(to, from, next) {
-  var isAuthenticated = false;
-  //todo: login request
-  if (localStorage.getItem("LoggedUser")) isAuthenticated = true;
+  let isAuthenticated = false;
+  if (localStorage.getItem("access_token")) isAuthenticated = true;
   else isAuthenticated = false;
   if (isAuthenticated) {
     next();
