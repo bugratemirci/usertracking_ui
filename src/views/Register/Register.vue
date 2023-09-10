@@ -3,11 +3,18 @@
     <div class="flex-1-0 ma-2 pa-2 flex-fill containerLeft"></div>
     <v-divider vertical color="blue" thickness="2"></v-divider>
     <v-sheet class="flex-1-0 ma-2 pa-15 align-center">
-      <v-text-field label="Username" v-model="username"></v-text-field>
-      <v-text-field type="password" label="Password" v-model="password"></v-text-field>
+      <v-text-field label="Name" v-model="user.name"></v-text-field>
+      <v-text-field type="email" label="Email" v-model="user.email"></v-text-field>
+      <v-text-field
+        type="password"
+        label="Password"
+        v-model="user.password"
+      ></v-text-field>
+      <v-text-field label="Username" v-model="user.username"></v-text-field>
+      <v-text-field type="phone" label="Phone" v-model="user.phone"></v-text-field>
 
-      <v-btn elevated @click="onClick" class="mr-2" color="blue"> Login </v-btn>
-      <v-btn elevated :to="{ name: 'Register' }" color="purple"> Register </v-btn>
+      <v-btn elevated class="mr-2" color="blue" @click="onClick"> Register </v-btn>
+      <v-btn elevated :to="{ name: 'Login' }" color="purple"> Go to login </v-btn>
     </v-sheet>
   </v-sheet>
 </template>
@@ -15,31 +22,28 @@
 <script lang="ts">
 import axios from "axios";
 import { useUserStore } from "@/store/app";
+import { register } from "@/services/User.service";
+import User from "@/models/User.model";
 const store = useUserStore();
 export default {
   data() {
     return {
       username: "",
       password: "",
+      name: "",
+      email: "",
+      phone: "",
+      user: new User(),
     };
   },
   methods: {
     onClick() {
-      axios
-        .post("http://localhost:8000/users/login/", {
-          username: this.username,
-          password: this.password,
-        })
-        .then((res) => {
-          localStorage.setItem("access_token", res.data.token);
-          store.setProperties(res.data.user);
-          this.$router.push({ name: "Todos" });
-        });
+      register(this.user).then((res) => {
+        console.log(res.data);
+      });
     },
   },
-  created() {
-    this.$router.push({ name: "Todos" });
-  },
+  created() {},
 };
 </script>
 

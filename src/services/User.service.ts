@@ -1,3 +1,4 @@
+import User from "@/models/User.model";
 import axios from "axios";
 
 export const getUserById = (userId: number) => {
@@ -21,4 +22,8 @@ export const getAnotherUsers = (userId: number) => {
 export const heartbeat = () => {
   const token = localStorage.getItem("access_token");
   return axios.post("http://localhost:8000/users/heartbeat/", { token: token });
+};
+
+export const register = (user: User) => {
+  return axios.post("http://localhost:8000/users/register/", user);
 };
