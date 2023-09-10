@@ -20,19 +20,12 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
-import { useUserStore } from "@/store/app";
 import { register } from "@/services/User.service";
 import User from "@/models/User.model";
-const store = useUserStore();
+
 export default {
   data() {
     return {
-      username: "",
-      password: "",
-      name: "",
-      email: "",
-      phone: "",
       user: new User(),
     };
   },
