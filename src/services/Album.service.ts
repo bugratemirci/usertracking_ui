@@ -38,3 +38,15 @@ export const addPhotoToAlbum = (photoId: number, albumId: number) => {
     }
   );
 };
+export const deletePhotoFromAlbum = (photoId: number, albumId: number) => {
+  return axios.put(
+    import.meta.env.VITE_API_URL + "albums/removephotofromalbum/",
+    null,
+    {
+      params: { photo_id: photoId, album_id: albumId },
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+      },
+    }
+  );
+};

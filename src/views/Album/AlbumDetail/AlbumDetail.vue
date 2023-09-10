@@ -17,11 +17,19 @@
           </v-row>
         </template>
       </v-img>
+      <v-btn
+        icon="mdi-select-remove"
+        size="small"
+        color="red"
+        @click="deletePhotoFromAlbum(n.id)"
+      ></v-btn>
     </v-col>
   </v-row>
 </template>
 <script lang="ts">
 import { getPhotosByAlbum } from "@/services/Photo.service.ts";
+import { deletePhotoFromAlbum } from "@/services/Album.service.ts";
+
 export default {
   data: () => ({ photos: [] }),
   created() {
@@ -33,6 +41,12 @@ export default {
     this.projectRootPath = import.meta.env.VITE_PROJECT_ROOT_PATH_PREFIX + "/users";
   },
   components: {},
-  methods: {},
+  methods: {
+    deletePhotoFromAlbum(photoId: number) {
+      deletePhotoFromAlbum(photoId, this.$route.params.albumId).then((res) => {
+        console.log(res.data);
+      });
+    },
+  },
 };
 </script>

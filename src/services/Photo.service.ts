@@ -38,3 +38,12 @@ export const getPhotosByAlbum = (albumId: number) => {
     },
   });
 };
+
+export const deletePhoto = (photo_id: number) => {
+  return axios.delete(import.meta.env.VITE_API_URL + "photos/deletephoto/", {
+    params: { photo_id: photo_id },
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("access_token"),
+    },
+  });
+};

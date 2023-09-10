@@ -17,12 +17,18 @@
           </v-row>
         </template>
       </v-img>
+      <v-btn
+        icon="mdi-select-remove"
+        size="small"
+        color="red"
+        @click="deletePhoto(n.id)"
+      ></v-btn>
     </v-col>
   </v-row>
   <AddPhotoModal />
 </template>
 <script lang="ts">
-import { getPhotosByUser } from "@/services/Photo.service.ts";
+import { getPhotosByUser, deletePhoto } from "@/services/Photo.service.ts";
 import AddPhotoModal from "@/components/AddPhotoModal/AddPhotoModal.vue";
 import { useUserStore } from "@/store/app";
 const userStore = useUserStore();
@@ -36,6 +42,12 @@ export default {
     this.projectRootPath = import.meta.env.VITE_PROJECT_ROOT_PATH_PREFIX + "users/";
   },
   components: { AddPhotoModal },
-  methods: {},
+  methods: {
+    deletePhoto(photoId: number) {
+      deletePhoto(photoId).then((res) => {
+        console.log(res.data);
+      });
+    },
+  },
 };
 </script>
