@@ -1,7 +1,16 @@
 <template>
   <v-container>
     <v-row>
-      <v-card variant="tonal" v-for="item in albums" :key="item" class="mr-4 mb-4">
+      <v-card
+        variant="tonal"
+        v-for="item in albums"
+        :key="item"
+        class="mr-4 mb-4 bg-purple-lighten-2 pa-2"
+      >
+        <v-chip class="ma-2" color="black" label>
+          <v-icon start color="white" icon="mdi-label"></v-icon>
+          <span style="color: white">{{ item.title }}</span>
+        </v-chip>
         <v-row style="width: 350px; margin: 0px">
           <v-col v-for="(n, index) in item.photos.slice(0, 4)" :key="index" md="6">
             <v-img
@@ -43,7 +52,7 @@
         <v-btn
           icon="mdi-plus"
           size="small"
-          color="purple"
+          color="red"
           v-on:click="onClickAlbum(item.id)"
           class="addPhotoToAlbumButton"
         ></v-btn>
@@ -99,12 +108,12 @@ export default {
 <style>
 .addPhotoToAlbumButton {
   position: absolute;
-  right: 1%;
-  bottom: 1%;
+  right: 5%;
+  bottom: 3%;
 }
 .infoPhotoToAlbumButton {
   position: absolute;
-  right: 15%;
-  bottom: 1%;
+  right: 20%;
+  bottom: 3%;
 }
 </style>

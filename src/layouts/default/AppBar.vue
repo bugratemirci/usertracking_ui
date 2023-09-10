@@ -70,7 +70,7 @@
           </template>
         </v-list-item>
         <v-list-item
-          prepend-icon="mdi-post"
+          prepend-icon="mdi-table-of-contents"
           title="Discover"
           value="discover"
           :to="{ path: 'discover' }"
@@ -78,6 +78,17 @@
           <template v-slot:prepend> <v-icon color="#4F359B"></v-icon> </template>
           <template v-slot:title>
             <span style="color: gray">Discover</span>
+          </template>
+        </v-list-item>
+        <v-list-item
+          prepend-icon="mdi-logout"
+          title="Logout"
+          value="logout"
+          @click="logout()"
+        >
+          <template v-slot:prepend> <v-icon color="#4F359B"></v-icon> </template>
+          <template v-slot:title>
+            <span style="color: gray">Logout</span>
           </template>
         </v-list-item>
       </v-list>
@@ -114,10 +125,14 @@ export default {
   components: {
     DefaultView,
   },
+  methods: {
+    logout() {
+      localStorage.removeItem("access_token");
+      this.$router.push({ name: "Login" });
+    },
+  },
   mounted() {
     const store = useUserStore();
-
-    this.userTestFolderName = "biygraa1693945348476074/";
     this.profilePhotoPath = store.$state.user.profile_photo_path || "";
     this.username = store.$state.user.username || "";
     this.email = store.$state.user.email || "";

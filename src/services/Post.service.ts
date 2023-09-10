@@ -26,3 +26,23 @@ export const addPost = (userId: number, post: Post) => {
     },
   });
 };
+
+export const addCommentToPost = (
+  userId: number,
+  postId: number,
+  message: string
+) => {
+  return axios.post(
+    import.meta.env.VITE_API_URL + "comments/",
+    { message: message },
+    {
+      params: {
+        user_id: userId,
+        post_id: postId,
+      },
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+      },
+    }
+  );
+};

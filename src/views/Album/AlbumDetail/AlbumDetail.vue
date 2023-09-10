@@ -5,8 +5,8 @@
         :src="projectRootPath + '/' + n.url"
         :lazy-src="projectRootPath + '/' + n.url"
         aspect-ratio="1"
-        cover
-        class="bg-grey-lighten-2"
+        :contain="true"
+        class="bg-white"
       >
         <template v-slot:placeholder>
           <v-row class="fill-height ma-0" align="center" justify="center">
@@ -30,7 +30,7 @@ export default {
     getPhotosByAlbum(this.$route.params.albumId).then((res) => {
       this.photos = res.data;
     });
-    this.projectRootPath = import.meta.env.VITE_PROJECT_ROOT_PATH_PREFIX + '/users';
+    this.projectRootPath = import.meta.env.VITE_PROJECT_ROOT_PATH_PREFIX + "/users";
   },
   components: {},
   methods: {},

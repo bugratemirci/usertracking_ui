@@ -1,11 +1,11 @@
 <template>
   <v-container>
     <v-row>
-      <v-col v-for="(item, index) in users" :key="index" cols="2">
-        <v-card class="mx-auto" max-width="500" min-height="350">
+      <v-col v-for="(item, index) in users" :key="index" cols="3">
+        <v-card class="mx-auto" max-width="300">
           <v-img
-            src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-            height="200px"
+            :src="projectRootPath + item.profile_photo_path"
+            height="500px"
             cover
           ></v-img>
 
@@ -27,14 +27,20 @@
           <v-expand-transition>
             <div v-show="shows[index]">
               <v-divider></v-divider>
-
-              <v-card-text>
-                I'm a thing. But, like most politicians, he promised more than he could
-                deliver. You won't have time for sleeping, soldier, not with all the bed
-                making you'll be doing. Then we'll go with that data file! Hey, you add a
-                one and two zeros to that or we walk! You're going to do his laundry? I've
-                got to find a way to escape.
-              </v-card-text>
+              <v-chip class="ma-2" color="purple" label text-color="white">
+                <v-icon start icon="mdi-phone"></v-icon>
+                {{ item.phone || "None" }}
+              </v-chip>
+              <v-divider></v-divider>
+              <v-chip class="ma-2" color="green" label text-color="white">
+                <v-icon start icon="mdi-mail"></v-icon>
+                {{ item.email || "None" }}
+              </v-chip>
+              <v-divider></v-divider>
+              <v-chip class="ma-2" color="blue" label text-color="white">
+                <v-icon start icon="mdi-map"></v-icon>
+                {{ item.address?.city || "None" }}
+              </v-chip>
             </div>
           </v-expand-transition>
         </v-card>
@@ -51,8 +57,12 @@ export default {
     shows: [],
     users: [],
     userId: Number,
+    projectRootPath: "",
   }),
   created() {
+    this.projectRootPath =
+      import.meta.env.VITE_PROJECT_ROOT_PATH_PREFIX +
+      import.meta.env.VITE_USERS_PATH_PREFIX;
     this.userId = userStore.$state.user.id;
     getAnotherUsers(this.userId).then((res) => {
       this.users = res.data;

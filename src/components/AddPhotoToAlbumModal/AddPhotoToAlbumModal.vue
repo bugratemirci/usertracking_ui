@@ -34,7 +34,6 @@
   </div>
 </template>
 <script lang="ts">
-import Photo from "@/models/Photo.model";
 import { getPhotosByUser } from "@/services/Photo.service";
 import { addPhotoToAlbum } from "@/services/Album.service";
 
@@ -44,6 +43,7 @@ export default {
       photo: [],
       projectRootPath: "",
       alert: false,
+      dialog: false,
     };
   },
   props: {
