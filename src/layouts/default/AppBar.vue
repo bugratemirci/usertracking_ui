@@ -13,6 +13,17 @@
 
       <v-list density="compact" nav>
         <v-list-item
+          prepend-icon="mdi-account-details"
+          title="Profile"
+          value="profile"
+          :to="{ name: 'Profile', params: { userId: userId } }"
+        >
+          <template v-slot:prepend> <v-icon color="#4F359B"></v-icon> </template>
+          <template v-slot:title>
+            <span style="color: gray">Profile</span>
+          </template>
+        </v-list-item>
+        <v-list-item
           prepend-icon="mdi-check"
           title="Todos"
           value="todos"
@@ -47,6 +58,7 @@
             <span style="color: gray">Albums</span>
           </template></v-list-item
         >
+
         <v-list-item
           prepend-icon="mdi-post"
           title="Posts"
@@ -59,7 +71,7 @@
           </template>
         </v-list-item>
         <v-list-item
-          prepend-icon="mdi-account"
+          prepend-icon="mdi-account-supervisor"
           title="Users"
           value="users"
           :to="{ name: 'Users' }"
@@ -120,6 +132,7 @@ export default {
       profilePhotoPath: "",
       username: "",
       email: "",
+      userId: -1,
     };
   },
   components: {
@@ -136,6 +149,7 @@ export default {
     this.profilePhotoPath = store.$state.user.profile_photo_path || "";
     this.username = store.$state.user.username || "";
     this.email = store.$state.user.email || "";
+    this.userId = store.$state.user.id || -1;
     this.projectRootPath =
       import.meta.env.VITE_PROJECT_ROOT_PATH_PREFIX +
       import.meta.env.VITE_USERS_PATH_PREFIX;

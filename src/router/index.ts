@@ -57,6 +57,13 @@ const routes = [
         beforeEnter: guardMyroute,
         component: () => import("@/views/Discover/DiscoverView.vue"),
       },
+      {
+        path: "/profile/:userId",
+        name: "Profile",
+        beforeEnter: guardMyroute,
+        component: () => import("@/views/Profile/Profile.vue"),
+        params: true,
+      },
     ],
   },
   {

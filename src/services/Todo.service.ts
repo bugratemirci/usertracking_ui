@@ -26,3 +26,16 @@ export const addTodo = (userId: number, todo: Todo) => {
     },
   });
 };
+
+export const setTodoCompleted = (todoId: number) => {
+  return axios.put(
+    import.meta.env.VITE_API_URL + "todos/settodotocomplete/",
+    null,
+    {
+      params: { todo_id: todoId },
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+      },
+    }
+  );
+};

@@ -1,7 +1,11 @@
 <template>
   <v-container>
     <template v-for="item in todos" :key="item">
-      <v-checkbox v-model="item.completed" :label="item.title"></v-checkbox>
+      <v-checkbox
+        v-model="item.completed"
+        :label="item.title"
+        @click="onClick(item.id)"
+      ></v-checkbox>
     </template>
   </v-container>
   <div class="text-center">
@@ -14,7 +18,7 @@
   <AddTodoModal />
 </template>
 <script lang="ts">
-import { getTodosByUser } from "@/services/Todo.service";
+import { getTodosByUser, setTodoCompleted } from "@/services/Todo.service";
 import AddTodoModal from "@/components/AddTodoModal/AddTodoModal.vue";
 import { useUserStore } from "@/store/app";
 const store = useUserStore();
@@ -34,6 +38,9 @@ export default {
         this.todos = res.data.results;
         this.total_page = res.data.total_pages;
       });
+    },
+    onClick(todoId: number) {
+      setTodoCompleted(todoId).then((res) => {});
     },
   },
   created() {

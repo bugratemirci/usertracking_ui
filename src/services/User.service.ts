@@ -2,8 +2,7 @@ import User from "@/models/User.model";
 import axios from "axios";
 
 export const getUserById = (userId: number) => {
-  return axios.get(import.meta.env.VITE_API_URL + "users/getuserbyid/", {
-    params: { user_id: userId },
+  return axios.get(import.meta.env.VITE_API_URL + "users/" + userId, {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("access_token"),
     },
