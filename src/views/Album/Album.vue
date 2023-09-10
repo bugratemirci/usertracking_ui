@@ -5,11 +5,11 @@
         variant="tonal"
         v-for="item in albums"
         :key="item"
-        class="mr-4 mb-4 bg-purple-lighten-2 pa-2"
+        class="mr-4 mb-4 bg-grey pa-2"
       >
-        <v-chip class="ma-2" color="black" label>
+        <v-chip class="ma-2" color="white" label>
           <v-icon start color="white" icon="mdi-label"></v-icon>
-          <span style="color: white">{{ item.title }}</span>
+          <span style="color: white; font-weight: 500">{{ item.title }}</span>
         </v-chip>
         <v-row style="width: 350px; margin: 0px">
           <v-col v-for="(n, index) in item.photos.slice(0, 4)" :key="index" md="6">
