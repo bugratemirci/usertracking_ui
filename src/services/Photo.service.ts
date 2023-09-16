@@ -1,13 +1,24 @@
 import Photo from "@/models/Photo.model";
 import axios from "axios";
+const instance = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+});
+
+instance.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization =
+      "Bearer " + localStorage.getItem("access_token");
+    return config;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
 
 export const getPhotosByUser = (userId: number) => {
-  return axios.get(import.meta.env.VITE_API_URL + "photos/getphotosbyuser/", {
+  return instance.get("photos/getphotosbyuser/", {
     params: {
       user_id: userId,
-    },
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("access_token"),
     },
   });
 };
@@ -20,30 +31,23 @@ export const addPhotoByUser = (userId: number, photo: Photo) => {
   const config = {
     method: "post",
     maxBodyLength: Infinity,
-    url: import.meta.env.VITE_API_URL + "photos/?user_id=" + userId,
+    url: "photos/?user_id=" + userId,
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: "Bearer " + localStorage.getItem("access_token"),
     },
     data: data,
   };
-  return axios.request(config);
+  return instance.request(config);
 };
 
 export const getPhotosByAlbum = (albumId: number) => {
-  return axios.get(import.meta.env.VITE_API_URL + "photos/getphotosbyalbum/", {
+  return instance.get("photos/getphotosbyalbum/", {
     params: { album_id: albumId },
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("access_token"),
-    },
   });
 };
 
 export const deletePhoto = (photo_id: number) => {
-  return axios.delete(import.meta.env.VITE_API_URL + "photos/deletephoto/", {
+  return instance.delete("photos/deletephoto/", {
     params: { photo_id: photo_id },
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("access_token"),
-    },
   });
 };

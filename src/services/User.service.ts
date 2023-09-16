@@ -1,28 +1,34 @@
 import User from "@/models/User.model";
 import axios from "axios";
+const instance = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+});
 
+instance.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization =
+      "Bearer " + localStorage.getItem("access_token");
+    return config;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
 export const getUserById = (userId: number) => {
-  return axios.get(import.meta.env.VITE_API_URL + "users/" + userId, {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("access_token"),
-    },
-  });
+  return instance.get("users/" + userId, {});
 };
 
 export const getAnotherUsers = (userId: number) => {
-  return axios.get(import.meta.env.VITE_API_URL + "users/getanotherusers/", {
+  return instance.get("users/getanotherusers/", {
     params: { user_id: userId },
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("access_token"),
-    },
   });
 };
 
 export const heartbeat = () => {
   const token = localStorage.getItem("access_token");
-  return axios.post("http://localhost:8000/users/heartbeat/", { token: token });
+  return instance.post("users/heartbeat/", { token: token });
 };
 
 export const register = (user: User) => {
-  return axios.post("http://localhost:8000/users/register/", user);
+  return instance.post("users/register/", user);
 };

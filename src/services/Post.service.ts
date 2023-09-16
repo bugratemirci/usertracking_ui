@@ -1,29 +1,33 @@
 import Post from "@/models/Post.model";
 import axios from "axios";
 
+const instance = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+});
+instance.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization =
+      "Bearer " + localStorage.getItem("access_token");
+    return config;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
 export const getAllPosts = (page: number) => {
-  return axios.get(import.meta.env.VITE_API_URL + "posts/?page=" + page, {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("access_token"),
-    },
-  });
+  return instance.get("posts/?page=" + page, {});
 };
 
 export const getPostsByUser = (userId: number, page: number, limit: number) => {
-  return axios.get(import.meta.env.VITE_API_URL + "posts/getpostsbyuser/", {
+  return instance.get("posts/getpostsbyuser/", {
     params: { user_id: userId, page: page, page_size: limit },
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("access_token"),
-    },
   });
 };
 
 export const addPost = (userId: number, post: Post) => {
-  return axios.post(import.meta.env.VITE_API_URL + "posts/", post, {
+  return instance.post(import.meta.env.VITE_API_URL + "posts/", post, {
     params: { user_id: userId },
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("access_token"),
-    },
   });
 };
 
@@ -33,15 +37,12 @@ export const addCommentToPost = (
   message: string
 ) => {
   return axios.post(
-    import.meta.env.VITE_API_URL + "comments/",
+    "comments/",
     { message: message },
     {
       params: {
         user_id: userId,
         post_id: postId,
-      },
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("access_token"),
       },
     }
   );
